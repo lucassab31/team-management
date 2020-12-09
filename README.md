@@ -1,1 +1,2 @@
-# team-management
+# Team Management
+## Educational project
