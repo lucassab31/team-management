@@ -60,7 +60,7 @@ form {
 
 form input {
     padding: 5px 2px;
-    margin: 1em 0;
+    margin: 0 0 1em;
 }
 
 form input:not([type="submit"]) {
@@ -92,7 +92,7 @@ form input::placeholder{
     font-family: var(--ff-title);
 }
 
-form input[type="text"]:focus{
+form input:focus{
     outline: none;
     border-left: 2px solid var(--clr-primary);
     transition: .2s ease-in-out;
@@ -102,21 +102,16 @@ form input[type="text"]:focus{
     -o-transition: .2s ease-in-out;
 }
 
-.ajout-match, .modification-match {
-    color: var(--clr-primary);
-    border: 1px solid var(--clr-primary);
-    width: 400px;
-    margin: auto;
-    padding: 1em;
-    border-radius: 5px; 
+form select{
+    margin: .5em 0 0;
+    background: none;
+    border: 2px solid var(--clr-primary);
+    padding: 2px 2px;
+     border-radius: 5px; 
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-}
-
-.ajout-match form label, .modification-match form label {
-    text-align: left;
 }
 
 /* Header */
@@ -285,3 +280,22 @@ header nav ul li+li {
     border: 1px solid var(--clr-primary);
     border-radius: 5px;
 }
+
+/* Matchs */
+.ajout-match, .modification-match {
+    color: var(--clr-primary);
+    border: 1px solid var(--clr-primary);
+    width: 400px;
+    margin: auto;
+    padding: 1em;
+    border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.ajout-match form label, .modification-match form label {
+    text-align: left;
+}
+
