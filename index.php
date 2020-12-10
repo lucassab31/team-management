@@ -4,9 +4,10 @@
 <main>
     <section class="stats">
         <div class="stats__matchs">
-            <h2 class="section-title"><span class="text-orange">Résultats</span></h2>
+            <h2 class="section-title text-orange">Résultats</h2>
             camembert
             <div class="stats__matchs__nombres">
+                <h3 class="text-orange">Matchs :</h3>
                 <div class="stats__matchs__nombres__nombre">
                     <p><strong>Victoires : </strong>php</p>
                 </div>
@@ -19,7 +20,7 @@
             </div>
         </div>
         <div class="stats_joueurs">
-            <h2 class="section-title"><span class="text-orange">Statistiques des joueurs</span></h2>
+            <h2 class="section-title text-orange">Statistiques des joueurs</h2>
             <table>
                 <tr>
                     <th>Photo</th>

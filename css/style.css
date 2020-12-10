@@ -46,6 +46,10 @@ h1, h2, h3, h4, p {
     color: var(--clr-accent);
 }
 
+.text-center {
+    text-align: center;
+}
+
 /* Général */
 
 form {
@@ -188,12 +192,34 @@ header nav ul li+li {
 
 .stats {
     display: flex;
+    margin: 1em;
+    justify-content: space-around;
+    font-family: var(--ff-title);
 }
 
 .stats__matchs {
-    width: 30%;
+    padding: 1em;
+    text-align: center;
+    width: 25%;
+    border: 1px solid var(--clr-primary);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.stats__matchs__nombres__nombre {
+    margin: 1em 0 0;
+}
+
+.stats__matchs__nombres__nombre:last-child {
+    margin-bottom: 1em;
 }
 
 .stats_joueurs {
-    width: 70%;
+    padding: 1em;
+    width: 65%;
+    border: 1px solid var(--clr-primary);
+    border-radius: 5px;
 }
