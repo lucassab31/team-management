@@ -7,9 +7,9 @@
 
     --ff-title: 'Fira Sans', sans-serif;
 
-    --fs-title: 2em;
-    --fs-sub-title: 1.5em;
-    --fs-text: 1em;
+    --fs-title: 2rem;
+    --fs-sub-title: 1.5rem;
+    --fs-text: 1rem;
 }
 
 *, *::before, *::after {
