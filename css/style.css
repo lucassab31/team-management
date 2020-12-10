@@ -51,7 +51,30 @@ h1, h2, h3, h4, p {
     text-align: center;
 }
 
+i {
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+i:hover {
+    box-shadow: 2px 2px #999999;
+    transition: .2s ease-in-out;
+    -webkit-transition: .2s ease-in-out;
+    -moz-transition: .2s ease-in-out;
+    -ms-transition: .2s ease-in-out;
+    -o-transition: .2s ease-in-out;
+}
+
 /* Général */
+
+main {
+    margin: 0 1em;
+}
 
 form {
     margin: 2em auto;
@@ -143,6 +166,13 @@ header {
     background-color: var(--clr-primary);
     color: white;
     display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+header+main {
+    margin-top: 100px;
 }
 
 header a {
@@ -306,7 +336,7 @@ header nav ul li+li {
 
 /* Matchs */
 
-.ajout-match, .modification-match {
+.ajout-match, .modification-match, .ajout-joueur, .modification-joueur {
     color: var(--clr-primary);
     border: 1px solid var(--clr-primary);
     width: 400px;
@@ -321,4 +351,34 @@ header nav ul li+li {
 
 .ajout-match form label, .modification-match form label {
     text-align: left;
+}
+
+/* Joueurs */
+
+.joueurs__header {
+    display: flex;
+}
+
+.joueurs__header h2 {
+    width: 50%;
+}
+
+.joueurs__recherche {
+    width: 50%;
+    text-align: right;
+}
+
+.joueurs__recherche form {
+    width: auto;
+    margin: 0;
+}
+
+.joueurs__recherche form input[type="submit"] {
+    margin: 0;
+    display: inline-block;
+}
+
+.liste-joueurs {
+    margin: 1em auto;
+    width: 80%;
 }

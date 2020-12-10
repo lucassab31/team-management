@@ -2,31 +2,35 @@
     require_once('includes/header.php');
 ?>
 <main>
-    <section class="liste-joueurs">
-        <h2 class="section-title">Liste des joueurs <i class="fa fa-plus"></i></h2>
-        <div class="players__recherche">
-            <form method="post">
-                <input type="text" name="recherche" placeholder="Rechercher ...">
-                <select name="option">
-                    <option value="nom">Nom</option>
-                    <option value="numLicence">Num Licence</option>
-                    <option value="statut">Statut</option>
-                    <option value="poste">Poste</option>
-                </select>
-                <input type="submit" value="Rechercher">
-            </form>
+    <section class="joueurs">
+        <div class="joueurs__header">
+            <h2 class="section-title text-orange">Liste des joueurs <a href="#"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+            <div class="joueurs__recherche">
+                <form method="post">
+                    <input type="text" name="recherche" placeholder="Rechercher ...">
+                    <select name="option">
+                        <option value="nom">Nom</option>
+                        <option value="numLicence">Num Licence</option>
+                        <option value="statut">Statut</option>
+                        <option value="poste">Poste</option>
+                    </select>
+                    <input type="submit" value="Rechercher">
+                </form>
+            </div>
         </div>
-        <table>
-            <tr>
-                <th>Num Licence</th>
-                <th>Photo</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Statut</th>
-                <th>Poste</th>
-                <th>Action</th>
-            </tr>
-        </table>
+        <div class="liste-joueurs">
+            <table>
+                <tr>
+                    <th>Num Licence</th>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Statut</th>
+                    <th>Poste</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </div>
     </section>
 
     <section class="detail-joueur">
@@ -35,7 +39,7 @@
     </section>
 
     <section class="ajout-joueur">
-        <h2 class="section-title">Ajout d'un joueur</h2>
+        <h2 class="section-title text-center  text-orange">Ajout d'un joueur</h2>
         <form method="post" enctype="multipart/form-data">
             <input type="number" name="numLicence" placeholder="N° licence" required>
             <input type="text" name="nom" placeholder="Nom" required>
@@ -67,7 +71,7 @@
     </section>
 
     <section class="modification-joueur">
-    <h2 class="section-title">Modification de XXX</h2>
+    <h2 class="section-title  text-center text-orange">Modification de XXX</h2>
         <form method="post" enctype="multipart/form-data">
             <input type="number" name="numLicence" placeholder="N° licence" required>
             <input type="text" name="nom" placeholder="Nom" required>

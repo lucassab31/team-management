@@ -42,7 +42,7 @@
     </section>
 
     <section class="modification-match">
-    <h2 class="section-title">Modification du match du XX/XX/XXXX à XX:XX</h2>
+    <h2 class="section-title text-orange text-center">Modification du match du XX/XX/XXXX à XX:XX</h2>
         <form method="post">
         <label for="date">Date du match</label>
             <input type="date" name="dateM" required>
