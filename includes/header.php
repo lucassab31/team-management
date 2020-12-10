@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1><a href="index.php">TeamManagement</a></h1>
+        <h1 class="section-title"><a href="index.php">Team<span class="text-orange">Management</span></a></h1>
         <nav>
             <ul>
                 <li><a href="index.php">ACCUEIL</a></li>
