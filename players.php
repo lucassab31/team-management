@@ -5,7 +5,7 @@
     <section class="joueurs">
         <div class="joueurs__header">
             <h2 class="section-title text-orange">Liste des joueurs <a href="#"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
-            <div class="joueurs__recherche">
+            <div class="recherche">
                 <form method="post">
                     <input type="text" name="recherche" placeholder="Rechercher ...">
                     <select name="option">
@@ -54,7 +54,7 @@
                 <option value="blesse">Blessé</option>
                 <option value="suspendu">Suspendu</option>
                 <option value="absent">Absent</option>
-            </select>
+            </select><br/>
             <label for="poste">Poste</label>
             <select name="poste">
                 <option value="gardien">Gardien</option>
@@ -86,7 +86,7 @@
                 <option value="blesse">Blessé</option>
                 <option value="suspendu">Suspendu</option>
                 <option value="absent">Absent</option>
-            </select>
+            </select><br/>
             <label for="poste">Poste</label>
             <select name="poste">
                 <option value="gardien">Gardien</option>

@@ -84,6 +84,9 @@ form {
 form input {
     padding: 5px 2px;
     margin: 0 0 1em;
+    font-family: var(--ff-title);
+    font-size: var(--fs-text);
+    height: 30px;
 }
 
 form input:not([type="submit"]) {
@@ -91,7 +94,6 @@ form input:not([type="submit"]) {
     border: none;
     border-bottom: 2px solid var(--clr-primary);
     color: var(--clr-primary);
-    font-size: var(--fs-text);
     width: 300px;
 }
 form input[type="submit"]{
@@ -104,8 +106,6 @@ form input[type="submit"]{
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     padding: 5px 15px;
-    font-family: var(--ff-title);
-    font-size: var(--fs-text);
     margin: 1em auto;
     display: block;
 }
@@ -113,6 +113,7 @@ form input[type="submit"]{
 form input::placeholder{
     color: var(--clr-primary);
     font-family: var(--ff-title);
+    font-size: var(--fs-text)
 }
 
 form input:focus{
@@ -126,7 +127,8 @@ form input:focus{
 }
 
 form select{
-    margin: .5em 0 0;
+    height: 30px;
+    margin-bottom: .5em;
     background: none;
     border: 2px solid var(--clr-primary);
     padding: 2px 2px;
@@ -140,24 +142,24 @@ form select{
 table {
     border-collapse: collapse;
     width: 100%;
-  }
-  
-  th, td {
+}
+
+th, td {
     padding: 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-      font-family: 'Questrial', sans-serif;
-      color: var(--clr-primary);
-  }
-  
-  td {
-      font-family: 'Raleway', sans-serif;
-  }
-  
-  tr:hover {background-color:#f5f5f5;}
+}
+
+th {
+    font-family: 'Questrial', sans-serif;
+    color: var(--clr-primary);
+}
+
+td {
+    font-family: 'Raleway', sans-serif;
+}
+
+tr:hover {background-color:#f5f5f5;}
 
 /* Header */
 
@@ -355,30 +357,30 @@ header nav ul li+li {
 
 /* Joueurs */
 
-.joueurs__header {
+.joueurs__header, .matchs__header {
     display: flex;
 }
 
-.joueurs__header h2 {
+.joueurs__header h2, .matchs__header h2 {
     width: 50%;
 }
 
-.joueurs__recherche {
+.recherche {
     width: 50%;
     text-align: right;
 }
 
-.joueurs__recherche form {
+.recherche form {
     width: auto;
     margin: 0;
 }
 
-.joueurs__recherche form input[type="submit"] {
+.recherche form input[type="submit"] {
     margin: 0;
     display: inline-block;
 }
 
-.liste-joueurs {
+.liste-joueurs, .liste-matchs {
     margin: 1em auto;
     width: 80%;
 }

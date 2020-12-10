@@ -2,23 +2,27 @@
     require_once('includes/header.php');
 ?>
 <main>
-    <section class="liste-matchs">
-        <h2 class="section-title">Liste des matchs <i class="fa fa-plus"></i></h2>
-        <div class="matchs__recherche">
-            <form method="post">
-                <input type="date" name="recherche">
-                <input type="submit" value="Rechercher">
-            </form>
+    <section class="matchs">
+        <div class="matchs__header">
+            <h2 class="section-title text-orange">Liste des matchs  <a href="#"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+            <div class="recherche">
+                <form method="post">
+                    <input type="date" name="recherche">
+                    <input type="submit" value="Rechercher">
+                </form>
+            </div>
         </div>
-        <table>
-            <tr>
-                <th>Date</th>
-                <th>L'heure</th>
-                <th>Lieu</th>
-                <th>Score</th>
-                <th>Action</th>
-            </tr>
-        </table>
+        <div class="liste-matchs">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>L'heure</th>
+                    <th>Lieu</th>
+                    <th>Score</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </div>
     </section>
 
     <section class="detail-match">
@@ -53,8 +57,7 @@
                 <option value="domicile">Domicile</option>
                 <option value="exterieur">Extérieur</option>
             </select>
-            <label for="score">Score</label>
-            <input type="texte" name="score" placeholder="3-1">
+            <input type="texte" name="score" placeholder="Score : x-x">
             <input type="submit" name="submitM" value="Modifier">
         </form>
     </section>
