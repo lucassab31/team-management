@@ -137,7 +137,7 @@
             <section class="modification-match">
                 <h2 class="section-title text-orange text-center">Modification du match du <?= $data['dateM'] ?> à <?= $data['heureM'] ?></h2>
                 <form method="post">
-                <label for="date">Date du match</label>
+                    <label for="date">Date du match</label>
                     <input type="date" name="dateM" value="<?= $data['dateM'] ?>" required>
                     <label for="date">Heure du match</label>
                     <input type="time" name="heureM" value="<?= $data['heureM'] ?>" required>
@@ -167,9 +167,69 @@
         }
 
         if ($_GET['action'] == "detail") {
+            $id = $_GET['id'];
+            $select = $bdd->prepare("SELECT * FROM matchs WHERE idMatch=$id");
+            $select->execute();
+            $data = $select->fetch();
             ?>
             <section class="detail-match">
-                <h2 class="section-title">Match du XX/XX/XXXX à XX:XX</h2>
+                <h2 class="section-title text-orange">Match du <?= $data['dateM'] ?> à <?= $data['heureM'] ?></h2>
+                <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                <div class="liste-matchs">
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>L'heure</th>
+                            <th>opposant</th>
+                            <th>Lieu</th>
+                            <th>Score</th>
+                        </tr>
+                        <tr>
+                            <td><?= $data['dateM'] ?></td>
+                            <td><?= $data['heureM'] ?></td>
+                            <td><?= $data['opposant'] ?></td>
+                            <td><?= $data['lieu'] ?></td>
+                            <td><?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "NA" ?></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <h2 class="section-title text-orange">Joueurs participant :</h2>
+                    <br/>
+                    <table>
+                        <tr>
+                            <th>Num Licence</th>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Poste</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                        <?php
+                            $selectP = $bdd->prepare("SELECT idJoueur, statutM FROM jouer WHERE idMacth=?");
+                            $selectP->execute(array($_GET['id']));
+
+                            while ($participant = $selectP->fetch()) {
+                                $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE idJoueur=?");
+                                $selectJ->execute(array($participant['idJoueur']));
+                                $data = $selectJ->fetch();
+                                ?>
+                                <tr>
+                                    <td><?= $data['numLicence'] ?></td>
+                                    <td><img src="img/joueurs/<?= $data['numLicence'] ?>.jpeg" alt="photo du joueur"></td>
+                                    <td><?= $data['nom'] ?></td>
+                                    <td><?= $data['prenom'] ?></td>
+                                    <td><?= $data['poste'] ?></td>
+                                    <td><?= $participant['statutM'] ?></td>
+                                    <td>
+                                        <a href="?action=suppressionParticipant&id=<?= $participant['idJoueur'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                    </table>
+                </div>
             </section>
             <?php
         }
