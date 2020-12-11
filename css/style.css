@@ -89,7 +89,7 @@ form input, form textarea {
     height: 30px;
 }
 
-form input:not([type="submit"]) {
+form input:not([type="submit"]), form textarea {
     background: none;
     border: none;
     border-bottom: 2px solid var(--clr-primary);
