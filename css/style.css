@@ -81,7 +81,7 @@ form {
     width : 300px;
 }
 
-form input {
+form input, form textarea {
     padding: 5px 2px;
     margin: 0 0 1em;
     font-family: var(--ff-title);
@@ -121,13 +121,13 @@ form input[type="submit"]:hover, form input[type="submit"]:focus {
     -o-transition: .2s ease-in-out;
 }
 
-form input::placeholder{
+form input::placeholder, form textarea::placeholder{
     color: var(--clr-primary);
     font-family: var(--ff-title);
     font-size: var(--fs-text)
 }
 
-form input:focus{
+form input:focus, form textarea:focus{
     outline: none;
     border-left: 2px solid var(--clr-primary);
     transition: .2s ease-in-out;

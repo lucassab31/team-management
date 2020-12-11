@@ -90,3 +90,10 @@
         </form>
     </section>
 </main>
+<script>
+    function Supp(link){
+        if(confirm('Confirmer la suppression ?')){
+        document.location.href = link;
+        }
+   };
+</script>
