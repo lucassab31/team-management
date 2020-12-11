@@ -182,8 +182,8 @@
                 } else {
                     $score = array(null, null);
                 }
-                $update = $bdd->prepare("UPDATE matchs SET dateM=?, heureM=?, opposant=?, scO=?, scU=? WHERE idMatch=$id");
-                $update->execute(array($_POST['dateM'], $_POST['heureM'], $_POST['opposant'], $score[1], $score[0]));
+                $update = $bdd->prepare("UPDATE matchs SET dateM=?, heureM=?, opposant=?, lieu=? scO=?, scU=? WHERE idMatch=$id");
+                $update->execute(array($_POST['dateM'], $_POST['heureM'], $_POST['opposant'], $_POST['lieu'], $score[1], $score[0]));
                 header('Location: ?action=liste');
             }
         }
@@ -225,6 +225,7 @@
                             <th>Prénom</th>
                             <th>Poste</th>
                             <th>Statut</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                         <?php
@@ -242,8 +243,9 @@
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
                                     <td><?= $participant['statutM'] ?></td>
+                                    <td><form name="<?= $data['numLicence'] ?>" method="post"><input name="numLicence" value="<?= $data['numLicence'] ?>" hidden><input onChange="Change(this.form, this.value)" type="range" value="<?= !empty($participant['note']) ? $participant['note'] : 0 ?>" name="note" min="0" max="5"></form></td>
                                     <td>
-                                        <a href="?action=detail&id=<?= $_GET['id'] ?>&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                        <a href="?action=detail&id=<?= $_GET['id'] ?>&modify=suppr&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -253,10 +255,18 @@
                 </div>
             </section>
             <?php
-            if (isset($_GET['numLicence'])) {
-                $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? AND idMatch=? ");
-                $delete->execute(array($_GET['numLicence'], $_GET['id']));
-                header('Location: ?action=detail&id='.$_GET['id']);
+            if (isset($_GET['modify'])) {
+                if ($_GET['modify'] == "suppr") {
+                    $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? AND idMatch=? ");
+                    $delete->execute(array($_GET['numLicence'], $_GET['id']));
+                    header('Location: ?action=detail&id='.$_GET['id']);
+                }
+            }
+
+            if (isset($_POST['note'])) {
+                $update = $bdd->prepare("UPDATE jouer SET note=? WHERE numLicence=? AND idMatch=?");
+                $update->execute(array($_POST['note'], $_POST['numLicence'], $_GET['id']));
+                sleep(1);
             }
         }
 
@@ -271,5 +281,13 @@
         if(confirm('Confirmer la suppression ?')){
         document.location.href = link;
         }
-   };
+    };
+
+    function Change(form, value) {
+        form.submit();
+    };
+
+    function test(value) {
+        alert(value);
+    }
 </script>
