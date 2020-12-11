@@ -81,17 +81,14 @@
             }
         }
 
-        
         if ($_GET['action'] == "ajout_joueurs") {
+            $idMatch = $_GET['id'];
             ?>
             <section class="ajout_joueurs-match">
                 <h2 class="section-title text-orange">Ajout des joueurs participant au match</h2>
                 <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                <i style="background-color:purple;" class="fas fa-volleyball-ball"> Titulaire</i> <i style="background-color:pink;" class="fas fa-volleyball-ball"> Remplaçant</i>
                 <div class="liste-matchs">
-                    <?php
-                        $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMacth=?");
-                        $selectP->execute(array($_GET['id']));
-                    ?>
                     <table>
                         <tr>
                             <th>Num Licence</th>
@@ -105,7 +102,10 @@
                             $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE statut=?");
                             $selectJ->execute(array("actif"));
 
-                            while ($data = $select->fetch()) {
+                            while ($data = $selectJ->fetch()) {
+                                $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMatch=? AND numLicence=?");
+                                $selectP->execute(array($idMatch, $data['numLicence']));
+                                $dataP = $selectP->fetch();
                                 ?>
                                 <tr>
                                     <td><?= $data['numLicence'] ?></td>
@@ -113,19 +113,41 @@
                                     <td><?= $data['nom'] ?></td>
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
-                                    <td>
-                                        <a href="?action=ajout_joueurs&id=<?= $data['numLicence'] ?>"><i style="background-color:green;" class="fas fa-user-plus"></i></a>
-                                        <a href="?action=modification&id=<?= $data['numLicence'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
-                                    </td>
+                                    <?php
+                                        if (isset($dataP['statutM'])) {
+                                            if ($dataP['statutM'] == "Titulaire") {
+                                                ?>
+                                                <td><i style="background-color:purple;" class="fas fa-volleyball-ball"></i></td>
+                                                <?php
+
+                                            } else if ($dataP['statutM'] == "Remplaçant") {
+                                                ?>
+                                                <td><i style="background-color:pink;" class="fas fa-volleyball-ball"></i></td>
+                                                <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <td>
+                                                <a href="?action=ajout_joueurs&id=<?= $idMatch ?>&statutM=Titulaire&numLicence=<?= $data['numLicence'] ?>"><i style="background-color:purple;" class="fas fa-volleyball-ball"></i></a>
+                                                <a href="?action=ajout_joueurs&id=<?= $idMatch ?>&statutM=Remplaçant&numLicence=<?= $data['numLicence'] ?>"><i style="background-color:pink;" class="fas fa-volleyball-ball"></i></a>
+                                            </td>
+                                            <?php
+                                        }
+                                    ?>
                                 </tr>
                                 <?php
                             }
                         ?>
                     </table>
                 </div>
-                
             </section>
             <?php
+            if (isset($_GET['statutM'])) {
+                $idMatch = $_GET['id'];
+                $insert = $bdd->prepare("INSERT INTO jouer(numLicence, idMatch, statutM) VALUES(?,?,?)");
+                $insert->execute(array($_GET['numLicence'], $idMatch, $_GET['statutM']));
+                header('Location: ?action=ajout_joueurs&id='.$idMatch);
+            }
         }
 
         if ($_GET['action'] == "modification") {
@@ -206,12 +228,11 @@
                             <th>Action</th>
                         </tr>
                         <?php
-                            $selectP = $bdd->prepare("SELECT idJoueur, statutM FROM jouer WHERE idMacth=?");
+                            $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMatch=?");
                             $selectP->execute(array($_GET['id']));
-
                             while ($participant = $selectP->fetch()) {
-                                $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE idJoueur=?");
-                                $selectJ->execute(array($participant['idJoueur']));
+                                $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE numLicence=?");
+                                $selectJ->execute(array($participant['numLicence']));
                                 $data = $selectJ->fetch();
                                 ?>
                                 <tr>
@@ -222,7 +243,7 @@
                                     <td><?= $data['poste'] ?></td>
                                     <td><?= $participant['statutM'] ?></td>
                                     <td>
-                                        <a href="?action=suppressionParticipant&id=<?= $participant['idJoueur'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                        <a href="?action=detail&id=<?= $_GET['id'] ?>&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -232,6 +253,11 @@
                 </div>
             </section>
             <?php
+            if (isset($_GET['numLicence'])) {
+                $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? AND idMatch=? ");
+                $delete->execute(array($_GET['numLicence'], $_GET['id']));
+                header('Location: ?action=detail&id='.$_GET['id']);
+            }
         }
 
         if ($_GET['action'] == "suppression") {
