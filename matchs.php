@@ -69,6 +69,7 @@
                     </select>
                     <input type="submit" name="submitA" value="Ajouter">
                 </form>
+                <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
             </section>
             <?php
 
@@ -83,7 +84,9 @@
         if ($_GET['action'] == "ajout_joueurs") {
             ?>
             <section class="ajout_joueurs-match">
-            <div class="liste-matchs">
+                <h2 class="section-title text-orange">Ajout des joueurs participant au match</h2>
+                <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                <div class="liste-matchs">
                     <table>
                         <tr>
                             <th>Num Licence</th>
@@ -94,9 +97,8 @@
                             <th>Action</th>
                         </tr>
                         <?php
-                            $select = $bdd->prepare("SELECT * FROM joueurs WHERE statut=actif");
-                            $select->execute();
-                            $select->debugDumpParams();
+                            $select = $bdd->prepare("SELECT * FROM joueurs WHERE statut=?");
+                            $select->execute(array("actif"));
                             while ($data = $select->fetch()) {
                                 ?>
                                 <tr>
@@ -105,7 +107,6 @@
                                     <td><?= $data['nom'] ?></td>
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
-                                    <td><?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "NA" ?></td>
                                     <td>
                                         <a href="?action=ajout_joueurs&id=<?= $data['numLicence'] ?>"><i style="background-color:blue;" class="fas fa-user-plus"></i></a>
                                         <a href="?action=modification&id=<?= $data['numLicence'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
@@ -116,6 +117,7 @@
                         ?>
                     </table>
                 </div>
+                
             </section>
             <?php
         }
@@ -142,6 +144,7 @@
                     <input type="texte" name="score" placeholder="Score : x-x"  value="<?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "" ?>">
                     <input type="submit" name="submitM" value="Modifier">
                 </form>
+                <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
             </section>
             <?php
             if (isset($_POST['submitM'])) {
