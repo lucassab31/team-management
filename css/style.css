@@ -251,7 +251,7 @@ header nav ul li+li {
     margin: 1em;
 }
 
-.connexion form input[type="text"], input[type="password"] {
+.connexion form input[type="text"], .connexion form input[type="password"] {
     background: none;
     border: none;
     border-bottom: 2px solid white;
