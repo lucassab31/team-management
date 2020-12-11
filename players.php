@@ -8,7 +8,7 @@
             ?>
             <section class="joueurs">
                 <div class="joueurs__header">
-                    <h2 class="section-title text-orange">Liste des joueurs <a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+                    <h2 class="section-title text-orange">Liste des joueurs :<a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
                     <div class="recherche">
                         <form method="post">
                             <input type="text" name="recherche" placeholder="Rechercher ...">
