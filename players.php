@@ -8,7 +8,7 @@
             ?>
             <section class="joueurs">
                 <div class="joueurs__header">
-                    <h2 class="section-title text-orange">Liste des joueurs <a href="#"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+                    <h2 class="section-title text-orange">Liste des joueurs <a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
                     <div class="recherche">
                         <form method="post">
                             <input type="text" name="recherche" placeholder="Rechercher ...">
@@ -94,8 +94,8 @@
             <?php
 
             if (isset($_POST['submitA'])){
-                $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,dateN,taille,poids,statut,poste)VALUES(?,?,?,?,?,?,?,?)');
-                $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['dateN'],$_POST['taille'],$_POST['poids'],$_POST['statut'],$_POST['poste']));
+                $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,commentaire,dateN,taille,poids,statut,poste)VALUES(?,?,?,?,?,?,?,?,?)');
+                $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['commentaire'],$_POST['dateN'],$_POST['taille'],$_POST['poids'],$_POST['statut'],$_POST['poste']));
             }
         }
 
@@ -110,9 +110,10 @@
                         <label for="date">Date de naissance</label>
                         <input type="date" name="dateN" required>
                         <input type="number" name="taille" placeholder="Taille" required>
-                        <input type="number" name="poid" placeholder="Poid" required>
-                        <label for="satut">Statut</label>
-                        <select name="satut">
+                        <input type="number" name="poids" placeholder="Poids" required>
+                        <textarea name="commentaire" placeholder="Commentaire" rows="30"></textarea>
+                        <label for="statut">Statut</label>
+                        <select name="statut">
                             <option value="actif">Actif</option>
                             <option value="blesse">Blessé</option>
                             <option value="suspendu">Suspendu</option>
@@ -133,6 +134,12 @@
                     </form>
             </section>
             <?php
+            if (isset($_POST['submitModC'])) {
+                $id = $_GET['numLicence'];
+                $req = $bdd->prepare("UPDATE joueurs SET nom=?,prenom=?,dateN=?,taille=?,poids=?,commentaire=?,statut=?,poste=? WHERE numLicence=$id");
+                $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['adresse'], $_POST['cp'], $_POST['ville'], $_POST['tel']));
+                header('Location: ?');
+    }
         }
 
         if ($_GET['action'] == "detail") {
