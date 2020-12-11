@@ -1,5 +1,9 @@
 <?php session_start();
-    
+    try {
+        $bdd = new PDO("mysql:host=localhost; dbname=team-management", "root", "");
+    } catch (Exception $e) {
+        die("Erreur : " . $e->getMessage());
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
