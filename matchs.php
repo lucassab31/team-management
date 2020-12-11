@@ -100,7 +100,7 @@
                         </tr>
                         <?php
                             $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE statut=?");
-                            $selectJ->execute(array("actif"));
+                            $selectJ->execute(array("Actif"));
 
                             while ($data = $selectJ->fetch()) {
                                 $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMatch=? AND numLicence=?");
