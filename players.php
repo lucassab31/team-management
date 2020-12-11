@@ -90,6 +90,7 @@
                     <input type="file" name="photo">
                     <input type="submit" name="submitA" value="Ajouter">
                 </form>
+                <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
             </section>
             <?php
 
@@ -140,6 +141,7 @@
                         <input type="file" name="photo">
                         <input type="submit" name="submitM" value="Modifier">
                     </form>
+                    <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
             </section>
 
             <?php
