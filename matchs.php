@@ -36,8 +36,9 @@
                                     <td><?= $data['heureM'] ?></td>
                                     <td><?= $data['opposant'] ?></td>
                                     <td><?= $data['lieu'] ?></td>
-                                    <td><?= isset($date['score']) ? $data['score'] : "NA" ?></td>
+                                    <td><?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "NA" ?></td>
                                     <td>
+                                        <a href="?action=ajout_joueurs&id=<?= $data['idMatch'] ?>"><i style="background-color:blue;" class="fas fa-user-plus"></i></a>
                                         <a href="?action=modification&id=<?= $data['idMatch'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
                                         <a href="?action=suppression&id=<?= $data['idMatch'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
@@ -78,26 +79,81 @@
             }
         }
 
+        
+        if ($_GET['action'] == "ajout_joueurs") {
+            ?>
+            <section class="ajout_joueurs-match">
+            <div class="liste-matchs">
+                    <table>
+                        <tr>
+                            <th>Num Licence</th>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Poste</th>
+                            <th>Action</th>
+                        </tr>
+                        <?php
+                            $select = $bdd->prepare("SELECT * FROM joueurs WHERE statut=actif");
+                            $select->execute();
+                            $select->debugDumpParams();
+                            while ($data = $select->fetch()) {
+                                ?>
+                                <tr>
+                                    <td><?= $data['numLicence'] ?></td>
+                                    <td><img src="img/joueurs/<?= $data['numLicence'] ?>.jpeg" alt="photo du joueur"></td>
+                                    <td><?= $data['nom'] ?></td>
+                                    <td><?= $data['prenom'] ?></td>
+                                    <td><?= $data['poste'] ?></td>
+                                    <td><?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "NA" ?></td>
+                                    <td>
+                                        <a href="?action=ajout_joueurs&id=<?= $data['numLicence'] ?>"><i style="background-color:blue;" class="fas fa-user-plus"></i></a>
+                                        <a href="?action=modification&id=<?= $data['numLicence'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                    </table>
+                </div>
+            </section>
+            <?php
+        }
+
         if ($_GET['action'] == "modification") {
+            $id = $_GET['id'];
+            $select = $bdd->prepare("SELECT * FROM matchs WHERE idMatch=$id");
+            $select->execute();
+            $data = $select->fetch();
             ?>
             <section class="modification-match">
                 <h2 class="section-title text-orange text-center">Modification du match du XX/XX/XXXX à XX:XX</h2>
                 <form method="post">
                 <label for="date">Date du match</label>
-                    <input type="date" name="dateM" required>
+                    <input type="date" name="dateM" value="<?= $data['dateM'] ?>" required>
                     <label for="date">Heure du match</label>
-                    <input type="time" name="heureM" required>
-                    <input type="text" name="opposant" placeholder="Opposant" required>
+                    <input type="time" name="heureM" value="<?= $data['heureM'] ?>" required>
+                    <input type="text" name="opposant" placeholder="Opposant" value="<?= $data['opposant'] ?>" required>
                     <label for="lieu">Lieu</label>
                     <select name="lieu">
                         <option value="domicile">Domicile</option>
                         <option value="exterieur">Extérieur</option>
                     </select>
-                    <input type="texte" name="score" placeholder="Score : x-x">
+                    <input type="texte" name="score" placeholder="Score : x-x"  value="<?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "" ?>">
                     <input type="submit" name="submitM" value="Modifier">
                 </form>
             </section>
             <?php
+            if (isset($_POST['submitM'])) {
+                if (!empty($_POST['score'])) {
+                    $score = explode("-", $_POST['score']);
+                } else {
+                    $score = array(null, null);
+                }
+                $update = $bdd->prepare("UPDATE matchs SET dateM=?, heureM=?, opposant=?, scO=?, scU=? WHERE idMatch=$id");
+                $update->execute(array($_POST['dateM'], $_POST['heureM'], $_POST['opposant'], $score[1], $score[0]));
+                header('Location: ?action=liste');
+            }
         }
 
         if ($_GET['action'] == "detail") {
@@ -113,10 +169,6 @@
         } 
     }
 ?>
-
-    <?php
-        
-    ?>
 </main>
 <script>
     function Supp(link){
