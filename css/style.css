@@ -110,6 +110,17 @@ form input[type="submit"]{
     display: block;
 }
 
+form input[type="submit"]:hover, form input[type="submit"]:focus {
+    cursor: pointer;
+    background-color: var(--clr-accent-dark);
+    font-weight: bold;
+    transition: .2s ease-in-out;
+    -webkit-transition: .2s ease-in-out;
+    -moz-transition: .2s ease-in-out;
+    -ms-transition: .2s ease-in-out;
+    -o-transition: .2s ease-in-out;
+}
+
 form input::placeholder{
     color: var(--clr-primary);
     font-family: var(--ff-title);
