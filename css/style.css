@@ -399,3 +399,18 @@ header nav ul li+li {
     margin: 1em auto;
     width: 80%;
 }
+
+.carte-joueur{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.carte-joueur__image{
+    width: 30%;
+}
+
+.carte-joueur__information{
+    width: 60%;
+    line-height: 2em;
+}
