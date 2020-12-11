@@ -21,8 +21,8 @@
         <nav>
             <ul>
                 <li><a href="index.php">ACCUEIL</a></li>
-                <li><a href="players.php">JOUEURS</a></li>
-                <li><a href="matchs.php">MATCHS</a></li>
+                <li><a href="players.php?action=liste">JOUEURS</a></li>
+                <li><a href="matchs.php?action=liste">MATCHS</a></li>
             </ul>
         </nav>
     </header>
