@@ -47,8 +47,8 @@
             <label for="date">Date de naissance</label>
             <input type="date" name="dateN" required>
             <input type="number" name="taille" placeholder="Taille" required>
-            <input type="number" name="poid" placeholder="Poid" required>
-            <textarea name="commentaire" placeholder="Commentaire"></textarea>
+            <input type="number" name="poids" placeholder="Poids" required>
+            <textarea name="commentaire" placeholder="Commentaire" rows="30"></textarea>
             <label for="statut">Statut</label>
             <select name="statut">
                 <option value="actif">Actif</option>
@@ -73,8 +73,8 @@
 
      <?php
         if (isset($_POST['submitA'])){
-                $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,dateN,taille,poid,statut,poste)VALUES(?,?,?,?,?,?,?,?)');
-                $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['dateN'],$_POST['taille'],$_POST['poid'],$_POST['statut'],$_POST['poste']));
+                $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,dateN,taille,poids,statut,poste)VALUES(?,?,?,?,?,?,?,?)');
+                $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['dateN'],$_POST['taille'],$_POST['poids'],$_POST['statut'],$_POST['poste']));
             }
     ?>
 
