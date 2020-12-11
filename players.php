@@ -72,20 +72,20 @@
                     <textarea name="commentaire" placeholder="Commentaire" rows="30"></textarea>
                     <label for="statut">Statut</label>
                     <select name="statut">
-                        <option value="actif">Actif</option>
-                        <option value="blesse">Blessé</option>
-                        <option value="suspendu">Suspendu</option>
-                        <option value="absent">Absent</option>
+                        <option value="Actif">Actif</option>
+                        <option value="Blessé">Blessé</option>
+                        <option value="Suspendu">Suspendu</option>
+                        <option value="Absent">Absent</option>
                     </select><br/>
                     <label for="poste">Poste</label>
                     <select name="poste">
-                        <option value="gardien">Gardien</option>
-                        <option value="ailierG">Ailier gauche</option>
-                        <option value="ailierD">Ailier droit</option>
-                        <option value="arriereG">Arrière gauche</option>
-                        <option value="arriereD">Arrière droit</option>
-                        <option value="demiCentre">Demi centre</option>
-                        <option value="pivot">Pivot</option>
+                        <option value="Gardien">Gardien</option>
+                        <option value="Ailier gauche">Ailier gauche</option>
+                        <option value="Ailier droit">Ailier droit</option>
+                        <option value="Arrière gauche">Arrière gauche</option>
+                        <option value="Arrière droit">Arrière droit</option>
+                        <option value="Demi centre">Demi centre</option>
+                        <option value="Pivot">Pivot</option>
                     </select>
                     <input type="file" name="photo">
                     <input type="submit" name="submitA" value="Ajouter">
@@ -96,50 +96,58 @@
             if (isset($_POST['submitA'])){
                 $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,commentaire,dateN,taille,poids,statut,poste)VALUES(?,?,?,?,?,?,?,?,?)');
                 $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['commentaire'],$_POST['dateN'],$_POST['taille'],$_POST['poids'],$_POST['statut'],$_POST['poste']));
+                header('Location: ?action=liste');
             }
         }
 
         if ($_GET['action'] == "modification") {
+            $id = $_GET['id'];
+            $select = $bdd->prepare("SELECT * FROM joueurs WHERE numLicence=$id");
+            $select->execute();
+            $data = $select->fetch();
             ?>
+            
             <section class="modification-joueur">
-                <h2 class="section-title  text-center text-orange">Modification de XXX</h2>
+                <h2 class="section-title  text-center text-orange">Modification de <?=$data['nom'] . " " . $data['prenom']?> </h2>
                     <form method="post" enctype="multipart/form-data">
-                        <input type="number" name="numLicence" placeholder="N° licence" required>
-                        <input type="text" name="nom" placeholder="Nom" required>
-                        <input type="text" name="prenom" placeholder="Prénom" required>
+                        <input type="number" name="numLicence" value="<?= $data['numLicence'] ?>" placeholder="N° licence" required>
+                        <input type="text" name="nom" value="<?= $data['nom'] ?>"placeholder="Nom" required>
+                        <input type="text" name="prenom" value="<?= $data['prenom'] ?>"placeholder="Prénom" required>
                         <label for="date">Date de naissance</label>
-                        <input type="date" name="dateN" required>
-                        <input type="number" name="taille" placeholder="Taille" required>
-                        <input type="number" name="poids" placeholder="Poids" required>
-                        <textarea name="commentaire" placeholder="Commentaire" rows="30"></textarea>
+                        <input type="date" name="dateN" value="<?= $data['dateN'] ?>" required>
+                        <input type="number" name="taille" value="<?= $data['taille'] ?>"placeholder="Taille" required>
+                        <input type="number" name="poids" value="<?= $data['poids'] ?>"placeholder="Poids" required>
+                        <textarea name="commentaire" value="<?= $data['commentaire'] ?>"placeholder="Commentaire" rows="30"></textarea>
                         <label for="statut">Statut</label>
-                        <select name="statut">
-                            <option value="actif">Actif</option>
-                            <option value="blesse">Blessé</option>
-                            <option value="suspendu">Suspendu</option>
-                            <option value="absent">Absent</option>
+                        <select name="statut" value="<?= $data['statut'] ?>">
+                            <option value="<?= $data['statut'] ?>" selected><?= $data['statut'] ?></option>
+                            <option value="Actif">Actif</option>
+                            <option value="Blessé">Blessé</option>
+                            <option value="Suspendu">Suspendu</option>
+                            <option value="Absent">Absent</option>
                         </select><br/>
                         <label for="poste">Poste</label>
                         <select name="poste">
-                            <option value="gardien">Gardien</option>
-                            <option value="ailierG">Ailier gauche</option>
-                            <option value="ailierD">Ailier droit</option>
-                            <option value="arriereG">Arrière gauche</option>
-                            <option value="arriereD">Arrière droit</option>
-                            <option value="demiCentre">Demi centre</option>
-                            <option value="pivot">Pivot</option>
+                            <option value="<?= $data['poste'] ?>" selected><?= $data['poste'] ?></option>
+                            <option value="Gardien">Gardien</option>
+                            <option value="Ailier gauche">Ailier gauche</option>
+                            <option value="Ailier droit">Ailier droit</option>
+                            <option value="Arrière gauche">Arrière gauche</option>
+                            <option value="Arrière droit">Arrière droit</option>
+                            <option value="Demi centre">Demi centre</option>
+                            <option value="Pivot">Pivot</option>
                         </select>
                         <input type="file" name="photo">
                         <input type="submit" name="submitM" value="Modifier">
                     </form>
             </section>
+
             <?php
-            if (isset($_POST['submitModC'])) {
-                $id = $_GET['numLicence'];
+            if (isset($_POST['submitM'])) {
                 $req = $bdd->prepare("UPDATE joueurs SET nom=?,prenom=?,dateN=?,taille=?,poids=?,commentaire=?,statut=?,poste=? WHERE numLicence=$id");
-                $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['adresse'], $_POST['cp'], $_POST['ville'], $_POST['tel']));
-                header('Location: ?');
-    }
+                $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['dateN'], $_POST['taille'], $_POST['poids'], $_POST['commentaire'], $_POST['statut'],$_POST['poste']));
+                header('Location: ?action=liste');
+            }
         }
 
         if ($_GET['action'] == "detail") {
