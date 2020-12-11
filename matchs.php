@@ -38,7 +38,8 @@
                                     <td><?= $data['lieu'] ?></td>
                                     <td><?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "NA" ?></td>
                                     <td>
-                                        <a href="?action=ajout_joueurs&id=<?= $data['idMatch'] ?>"><i style="background-color:blue;" class="fas fa-user-plus"></i></a>
+                                        <a href="?action=detail&id=<?= $data['idMatch'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                        <a href="?action=ajout_joueurs&id=<?= $data['idMatch'] ?>"><i style="background-color:green;" class="fas fa-user-plus"></i></a>
                                         <a href="?action=modification&id=<?= $data['idMatch'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
                                         <a href="?action=suppression&id=<?= $data['idMatch'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
@@ -87,6 +88,10 @@
                 <h2 class="section-title text-orange">Ajout des joueurs participant au match</h2>
                 <a href="?action=liste"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                 <div class="liste-matchs">
+                    <?php
+                        $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMacth=?");
+                        $selectP->execute(array($_GET['id']));
+                    ?>
                     <table>
                         <tr>
                             <th>Num Licence</th>
@@ -97,8 +102,9 @@
                             <th>Action</th>
                         </tr>
                         <?php
-                            $select = $bdd->prepare("SELECT * FROM joueurs WHERE statut=?");
-                            $select->execute(array("actif"));
+                            $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE statut=?");
+                            $selectJ->execute(array("actif"));
+
                             while ($data = $select->fetch()) {
                                 ?>
                                 <tr>
@@ -108,7 +114,7 @@
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
                                     <td>
-                                        <a href="?action=ajout_joueurs&id=<?= $data['numLicence'] ?>"><i style="background-color:blue;" class="fas fa-user-plus"></i></a>
+                                        <a href="?action=ajout_joueurs&id=<?= $data['numLicence'] ?>"><i style="background-color:green;" class="fas fa-user-plus"></i></a>
                                         <a href="?action=modification&id=<?= $data['numLicence'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
                                     </td>
                                 </tr>
@@ -129,7 +135,7 @@
             $data = $select->fetch();
             ?>
             <section class="modification-match">
-                <h2 class="section-title text-orange text-center">Modification du match du XX/XX/XXXX à XX:XX</h2>
+                <h2 class="section-title text-orange text-center">Modification du match du <?= $data['dateM'] ?> à <?= $data['heureM'] ?></h2>
                 <form method="post">
                 <label for="date">Date du match</label>
                     <input type="date" name="dateM" value="<?= $data['dateM'] ?>" required>
@@ -138,8 +144,9 @@
                     <input type="text" name="opposant" placeholder="Opposant" value="<?= $data['opposant'] ?>" required>
                     <label for="lieu">Lieu</label>
                     <select name="lieu">
-                        <option value="domicile">Domicile</option>
-                        <option value="exterieur">Extérieur</option>
+                        <option value="<?= $data['lieu'] ?>"><?= $data['lieu'] ?></option>
+                        <option value="Domicile">Domicile</option>
+                        <option value="Extérieur">Extérieur</option>
                     </select>
                     <input type="texte" name="score" placeholder="Score : x-x"  value="<?= isset($data['scU']) ? $data['scU'] . "-" . $data['scO'] : "" ?>">
                     <input type="submit" name="submitM" value="Modifier">
