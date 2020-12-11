@@ -48,8 +48,9 @@
             <input type="date" name="dateN" required>
             <input type="number" name="taille" placeholder="Taille" required>
             <input type="number" name="poid" placeholder="Poid" required>
-            <label for="satut">Statut</label>
-            <select name="satut">
+            <textarea name="commentaire" placeholder="Commentaire"></textarea>
+            <label for="statut">Statut</label>
+            <select name="statut">
                 <option value="actif">Actif</option>
                 <option value="blesse">Blessé</option>
                 <option value="suspendu">Suspendu</option>
@@ -69,6 +70,13 @@
             <input type="submit" name="submitA" value="Ajouter">
         </form>
     </section>
+
+     <?php
+        if (isset($_POST['submitA'])){
+                $insert = $bdd->prepare('INSERT INTO joueurs(numLicence,nom,prenom,dateN,taille,poid,statut,poste)VALUES(?,?,?,?,?,?,?,?)');
+                $insert->execute(array($_POST['numLicence'],$_POST['nom'],$_POST['prenom'],$_POST['dateN'],$_POST['taille'],$_POST['poid'],$_POST['statut'],$_POST['poste']));
+            }
+    ?>
 
     <section class="modification-joueur">
     <h2 class="section-title  text-center text-orange">Modification de XXX</h2>

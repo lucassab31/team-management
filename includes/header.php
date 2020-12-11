@@ -5,6 +5,7 @@
         die("Erreur : " . $e->getMessage());
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
