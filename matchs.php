@@ -182,7 +182,7 @@
                 } else {
                     $score = array(null, null);
                 }
-                $update = $bdd->prepare("UPDATE matchs SET dateM=?, heureM=?, opposant=?, lieu=? scO=?, scU=? WHERE idMatch=$id");
+                $update = $bdd->prepare("UPDATE matchs SET dateM=?, heureM=?, opposant=?, lieu=?, scO=?, scU=? WHERE idMatch=$id");
                 $update->execute(array($_POST['dateM'], $_POST['heureM'], $_POST['opposant'], $_POST['lieu'], $score[1], $score[0]));
                 header('Location: ?action=liste');
             }
@@ -243,7 +243,7 @@
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
                                     <td><?= $participant['statutM'] ?></td>
-                                    <td><form name="<?= $data['numLicence'] ?>" method="post"><input name="numLicence" value="<?= $data['numLicence'] ?>" hidden><input onChange="Change(this.form, this.value)" type="range" value="<?= !empty($participant['note']) ? $participant['note'] : 0 ?>" name="note" min="0" max="5"></form></td>
+                                    <td><?= !empty($participant['note']) ? $participant['note'] . "/5" : "NA" ?></td>
                                     <td>
                                         <a href="?action=detail&id=<?= $_GET['id'] ?>&modify=suppr&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
@@ -273,6 +273,7 @@
 
         } 
     }
+    ob_end_flush();
 ?>
 </main>
 <script>

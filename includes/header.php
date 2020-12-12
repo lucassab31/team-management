@@ -1,4 +1,5 @@
 <?php session_start();
+ob_start();
     try {
         $bdd = new PDO("mysql:host=localhost; dbname=team-management", "root", "");
     } catch (Exception $e) {
