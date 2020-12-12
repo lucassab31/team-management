@@ -243,7 +243,14 @@
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
                                     <td><?= $participant['statutM'] ?></td>
-                                    <td><?= !empty($participant['note']) ? $participant['note'] . "/5" : "NA" ?></td>
+                                    <td>
+                                        <form method="post">
+                                            <input name="numLicence" value="<?= $data['numLicence'] ?>" hidden>
+                                            <label for="note"><?= !empty($participant['note']) ? $participant['note'] : "0" ?>/5</label>
+                                            <input type="range" name="note" onChange="Change(this.form, this.value)" value="<?= !empty($participant['note']) ? $participant['note'] : "0" ?>" min="0" max="5">
+                                        </form>
+                                    </td>
+                                    
                                     <td>
                                         <a href="?action=detail&id=<?= $_GET['id'] ?>&modify=suppr&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                     </td>
@@ -266,6 +273,7 @@
             if (isset($_POST['note'])) {
                 $update = $bdd->prepare("UPDATE jouer SET note=? WHERE numLicence=? AND idMatch=?");
                 $update->execute(array($_POST['note'], $_POST['numLicence'], $_GET['id']));
+                header('Location: ?action=detail&id='.$_GET['id']);
             }
         }
 
