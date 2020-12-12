@@ -22,12 +22,7 @@ html {
     font-size: var(--fs-text);
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-ul, li {
+body, img, ul, li {
     margin: 0;
     padding: 0;
 }
@@ -193,6 +188,7 @@ header+main {
 }
 
 header a {
+    display: flex;
     color: white;
     text-decoration: none;
 }
