@@ -109,7 +109,7 @@
                                 ?>
                                 <tr>
                                     <td><?= $data['numLicence'] ?></td>
-                                    <td><img src="img/joueurs/<?= $data['numLicence'] ?>.jpeg" alt="photo du joueur"></td>
+                                    <td><img src="img/<?= sha1($data['numLicence']) ?>.jpg" alt="photo du joueur"></td>
                                     <td><?= $data['nom'] ?></td>
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
@@ -238,7 +238,7 @@
                                 ?>
                                 <tr>
                                     <td><?= $data['numLicence'] ?></td>
-                                    <td><img src="img/joueurs/<?= $data['numLicence'] ?>.jpeg" alt="photo du joueur"></td>
+                                    <td><img src="img/<?= sha1($data['numLicence']) ?>.jpg" alt="photo du joueur"></td>
                                     <td><?= $data['nom'] ?></td>
                                     <td><?= $data['prenom'] ?></td>
                                     <td><?= $data['poste'] ?></td>
@@ -266,7 +266,6 @@
             if (isset($_POST['note'])) {
                 $update = $bdd->prepare("UPDATE jouer SET note=? WHERE numLicence=? AND idMatch=?");
                 $update->execute(array($_POST['note'], $_POST['numLicence'], $_GET['id']));
-                sleep(1);
             }
         }
 
@@ -286,8 +285,4 @@
     function Change(form, value) {
         form.submit();
     };
-
-    function test(value) {
-        alert(value);
-    }
 </script>
