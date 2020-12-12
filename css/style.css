@@ -187,7 +187,7 @@ header {
     width: 100%;
 }
 
-header+main {
+main {
     margin-top: 100px;
 }
 
