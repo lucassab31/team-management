@@ -1,10 +1,25 @@
 <?php session_start();
 ob_start();
     try {
-        // $bdd = new PDO("mysql:host=localhost; dbname=team-management", "root", "");
-        $bdd = new PDO("mysql:host=localhost; dbname=id15659294_team_management", "id15659294_dbusr", "O4R9!H9\N|J5ycKW");
+        $bdd = new PDO("mysql:host=localhost; dbname=team-management", "root", "");
+        // $bdd = new PDO("mysql:host=localhost; dbname=id15659294_team_management", "id15659294_dbusr", "O4R9!H9\N|J5ycKW");
     } catch (Exception $e) {
         die("Erreur : " . $e->getMessage());
+    }
+
+    if (isset($_COOKIE['token']) && !isset($_SESSION['id'])) {
+        $req = $bdd->prepare("SELECT * FROM utilisateurs WHERE token=?");
+        $req->execute(array($_COOKIE['token']));
+        $userexist = $req->rowCount();
+        if ($userexist == 1) {
+            $requser = $req->fetch();
+            $_SESSION['id'] = $requser['idUtilisateur'];
+            setcookie("token", $_COOKIE['token'], time()+3600*24*7, "/");
+        }
+    }
+
+    if (!isset($_SESSION['id'])) {
+        header('Location: login.php');
     }
 ?>
 
