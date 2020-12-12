@@ -278,7 +278,12 @@
         }
 
         if ($_GET['action'] == "suppression") {
+            $delete = $bdd->prepare("DELETE FROM matchs WHERE idMatch=? ");
+            $delete->execute(array($_GET['id']));
 
+            $delete = $bdd->prepare("DELETE FROM jouer WHERE idMatch=? ");
+            $delete->execute(array($_GET['id']));
+            header('Location: ?action=liste');
         } 
     }
     ob_end_flush();
