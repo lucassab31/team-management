@@ -418,3 +418,7 @@ header nav ul li+li {
     width: 60%;
     line-height: 2em;
 }
+
+.liste-matchs table tr td form {
+    margin: 0 auto;
+}
