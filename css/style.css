@@ -120,7 +120,7 @@ form input[type="submit"]:hover, form input[type="submit"]:focus {
     -o-transition: .2s ease-in-out;
 }
 
-form input::placeholder, form textarea::placeholder{
+form input::placeholder, form textarea::placeholder {
     color: var(--clr-primary);
     font-family: var(--ff-title);
     font-size: var(--fs-text)
@@ -277,7 +277,7 @@ header nav ul li+li {
     width: 300px;
 }
 
-.connexion form input[type="text"]::placeholder, input[type="password"]::placeholder {
+.connexion form input[type="text"]::placeholder, .connexion input[type="password"]::placeholder {
     color: white;
     font-family: var(--ff-title);
 }
@@ -357,7 +357,7 @@ header nav ul li+li {
 
 /* Matchs */
 
-.ajout-match, .modification-match, .ajout-joueur, .modification-joueur {
+.ajout-match, .modification-match, .ajout-joueur, .modification-joueur, .ajout-admin, .modification-admin {
     color: var(--clr-primary);
     border: 1px solid var(--clr-primary);
     width: 400px;
@@ -399,7 +399,7 @@ header nav ul li+li {
     display: inline-block;
 }
 
-.liste-joueurs, .liste-matchs {
+.liste-joueurs, .liste-matchs, .liste-admin {
     margin: 1em auto;
     width: 80%;
 }
