@@ -8,7 +8,7 @@
             ?>
             <section class="joueurs">
                 <div class="joueurs__header">
-                    <h2 class="section-title text-orange">Liste des joueurs :<a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+                    <h2 class="section-title text-orange">Liste des joueurs <a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
                     <div class="recherche">
                         <form method="post">
                             <input type="text" name="recherche" placeholder="Rechercher ...">
@@ -212,9 +212,14 @@
         }
 
         if ($_GET['action'] == "suppression") {
+            $delete = $bdd->prepare("DELETE FROM joueur WHERE numLicenece=? ");
+            $delete->execute(array($_GET['id']));
 
-        } 
-    }
+            $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? ");
+            $delete->execute(array($_GET['id']));
+            header('Location: ?action=liste');
+} 
+}
 ?>
 
     <?php
