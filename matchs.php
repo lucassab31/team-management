@@ -13,7 +13,7 @@
                     <div class="recherche">
                         <form method="post">
                             <input type="date" name="recherche">
-                            <input type="submit" value="Rechercher">
+                            <input type="submit" name="submitR" value="Rechercher">
                         </form>
                     </div>
                 </div>
@@ -28,7 +28,12 @@
                             <th>Action</th>
                         </tr>
                         <?php
-                            $select = $bdd->query("SELECT * FROM matchs");
+                            if (isset($_POST['submitR']) && !empty($_POST['recherche'])) {
+                                $select = $bdd->prepare("SELECT * FROM matchs WHERE dateM=?");
+                                $select->execute(array($_POST['recherche']));
+                            } else {
+                                $select = $bdd->query("SELECT * FROM matchs ORDER BY dateM");
+                            }
                             while ($data = $select->fetch()) {
                                 ?>
                                 <tr>
