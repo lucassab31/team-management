@@ -11,7 +11,7 @@
         if ($_GET['action'] == "liste") {
             ?>
             <section class="admin">
-                <h2 class="section-title text-orange">Liste des matchs <a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
+                <h2 class="section-title text-orange">Liste des utilisateurs <a href="?action=ajout"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></h2>
                 <div class="liste-admin">
                     <table>
                         <tr>
