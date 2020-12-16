@@ -1,11 +1,7 @@
 <?php session_start();
     try {
         $bdd = new PDO("mysql:host=localhost; dbname=team-management", "root", "");
-<<<<<<< HEAD
         //$bdd = new PDO("mysql:host=localhost; dbname=id15659294_team_management", "id15659294_dbusr", "O4R9!H9\N|J5ycKW");
-=======
-        // $bdd = new PDO("mysql:host=localhost; dbname=id15659294_team_management", "id15659294_dbusr", "O4R9!H9\N|J5ycKW");
->>>>>>> b6602413d1dab8fa5ac6632aada3dd3423ef669a
     } catch (Exception $e) {
         die("Erreur : " . $e->getMessage());
     }
