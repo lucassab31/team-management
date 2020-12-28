@@ -220,53 +220,60 @@
                         </tr>
                     </table>
                     <br/>
-                    <h2 class="section-title text-orange">Joueurs participant :</h2>
-                    <br/>
-                    <table>
-                        <tr>
-                            <th>Num Licence</th>
-                            <th>Photo</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Poste</th>
-                            <th>Statut</th>
-                            <th>Note</th>
-                            <th>Action</th>
-                        </tr>
-                        <?php
-                            $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMatch=?");
-                            $selectP->execute(array($_GET['id']));
-                            while ($participant = $selectP->fetch()) {
-                                $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE numLicence=?");
-                                $selectJ->execute(array($participant['numLicence']));
-                                $data = $selectJ->fetch();
-                                ?>
+                    <?php
+                        $selectP = $bdd->prepare("SELECT * FROM jouer WHERE idMatch=?");
+                        $selectP->execute(array($_GET['id']));
+                        if ($selectP->rowCount() > 0) {
+                            ?>
+                            <h2 class="section-title text-orange">Joueurs participant :</h2>
+                            <br/>
+                            <table>
                                 <tr>
-                                    <td><?= $data['numLicence'] ?></td>
-                                    <td><img src="img/<?= sha1($data['numLicence']) ?>.jpg" alt="photo du joueur"></td>
-                                    <td><?= $data['nom'] ?></td>
-                                    <td><?= $data['prenom'] ?></td>
-                                    <td><?= $data['poste'] ?></td>
-                                    <td><?= $participant['statutM'] ?></td>
-                                    <td>
-                                        <form method="post">
-                                            <input name="numLicence" value="<?= $data['numLicence'] ?>" hidden>
-                                            <label for="note"><?= !empty($participant['note']) ? $participant['note'] : "0" ?>/5</label>
-                                            <input type="range" name="note" onChange="Change(this.form, this.value)" value="<?= !empty($participant['note']) ? $participant['note'] : "0" ?>" min="0" max="5">
-                                        </form>
-                                    </td>
-                                    
-                                    <td>
-                                        <a href="?action=detail&id=<?= $_GET['id'] ?>&modify=suppr&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
-                                    </td>
+                                    <th>Num Licence</th>
+                                    <th>Photo</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Poste</th>
+                                    <th>Statut</th>
+                                    <th>Note</th>
+                                    <th>Action</th>
                                 </tr>
                                 <?php
-                            }
-                        ?>
-                    </table>
+                                    
+                                    while ($participant = $selectP->fetch()) {
+                                        $selectJ = $bdd->prepare("SELECT * FROM joueurs WHERE numLicence=?");
+                                        $selectJ->execute(array($participant['numLicence']));
+                                        $data = $selectJ->fetch();
+                                        ?>
+                                        <tr>
+                                            <td><?= $data['numLicence'] ?></td>
+                                            <td><img src="img/<?= sha1($data['numLicence']) ?>.jpg" alt="photo du joueur"></td>
+                                            <td><?= $data['nom'] ?></td>
+                                            <td><?= $data['prenom'] ?></td>
+                                            <td><?= $data['poste'] ?></td>
+                                            <td><?= $participant['statutM'] ?></td>
+                                            <td>
+                                                <form method="post">
+                                                    <input name="numLicence" value="<?= $data['numLicence'] ?>" hidden>
+                                                    <label for="note"><?= !empty($participant['note']) ? $participant['note'] : "0" ?>/5</label>
+                                                    <input type="range" name="note" onChange="Change(this.form, this.value)" value="<?= !empty($participant['note']) ? $participant['note'] : "0" ?>" min="0" max="5">
+                                                </form>
+                                            </td>
+                                            
+                                            <td>
+                                                <a href="?action=detail&id=<?= $_GET['id'] ?>&modify=suppr&numLicence=<?= $data['numLicence'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                ?>
+                            </table>
+                    <?php 
+                        }
+                    ?>
                 </div>
             </section>
-            <?php
+        <?php
             if (isset($_GET['modify'])) {
                 if ($_GET['modify'] == "suppr") {
                     $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? AND idMatch=? ");
