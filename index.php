@@ -121,7 +121,7 @@
                                                         AND statutM = "Remplaçant"
                                                     ) as nbRemp,
                                                     (
-                                                        SELECT AVG(note) 
+                                                        SELECT round(AVG(note), 0) 
                                                         FROM jouer 
                                                         WHERE numLicence = :numLicence
                                                     ) as moyNote,
