@@ -19,7 +19,11 @@
             ?>
             <h2 class="section-title text-orange">Résultats</h2>
             <?php
-                echo "<img src='./graph.php?win=$win&lose=$lose&draw=$draw' />";
+                if ($win == 0 && $lose == 0 && $draw == 0) {
+                    echo "Pas de match joué";
+                } else {
+                    echo "<img src='./graph.php?win=$win&lose=$lose&draw=$draw' />";
+                }
             ?>
             <br/><br/><br/>
             <div class="stats__matchs__nombres">
