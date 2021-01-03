@@ -247,7 +247,7 @@
                 <h2 class="section-title text-orange text-center">Joueur <?= $data['nom'] . " " . $data['prenom'] ?></h2>
                 <div class="carte-joueur">
                     <div class="carte-joueur__image">
-                        <img src="img/joueurs<?= $data['numLicence']?>.jpeg" alt="photo du joueur"> 
+                        <img src="img/<?= sha1($id)?>.jpg" alt="photo du joueur" width="30%"> 
                     </div>
                     <div class="carte-joueur__information">
                         N° de Licence : <?= $data['numLicence']?></br>
