@@ -198,6 +198,41 @@
             if (isset($_POST['submitM'])) {
                 $req = $bdd->prepare("UPDATE joueurs SET nom=?,prenom=?,dateN=?,taille=?,poids=?,commentaire=?,statut=?,poste=? WHERE numLicence=$id");
                 $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['dateN'], $_POST['taille'], $_POST['poids'], $_POST['commentaire'], $_POST['statut'],$_POST['poste']));
+                if(!empty($_FILES['photo']['name'])){
+                    unlink('./img/'.sha1($id).'.jpg');
+                    $img = $_FILES['photo']['name'];
+                    $img_tmp = $_FILES['photo']['tmp_name'];
+
+                    $image = explode('.', $img);
+                    $image_ext = end($image);
+
+                    if (in_array(strtolower($image_ext), array('png','jpg','jpeg')) === false)
+                    {
+                        echo "Veuillez rentrer une image ayant pour extension : png, jpg, jpg";
+                    }
+                    else
+                    {
+                        $image_size = getimagesize($img_tmp);
+                        if ($image_size['mime'] == 'image/jpeg')
+                        {
+                            $image_src = imagecreatefromjpeg($img_tmp);
+                        }
+                        elseif ($image_size['mime'] == 'image/png')
+                        {
+                            $image_src = imagecreatefrompng($img_tmp);
+                        }
+                        else
+                        {
+                            $image_src = false;
+                            echo "Veuillez entrer une image valide";
+                        }
+
+                        if ($image_src !== false)
+                        {
+                            imagejpeg($image_src,'./img/'.sha1($id).'.jpg');
+                        }
+                    }
+                }
                 header('Location: ?action=liste');
             }
         }
