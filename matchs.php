@@ -273,7 +273,7 @@
                     ?>
                 </div>
             </section>
-        <?php
+            <?php
             if (isset($_GET['modify'])) {
                 if ($_GET['modify'] == "suppr") {
                     $delete = $bdd->prepare("DELETE FROM jouer WHERE numLicence=? AND idMatch=? ");
