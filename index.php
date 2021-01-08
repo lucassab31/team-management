@@ -107,27 +107,47 @@
     var win = <?= json_encode($win) ?>;
     var lose = <?= json_encode($lose) ?>;
     var draw = <?= json_encode($draw) ?>;
+    var total = win + lose + draw;
 
     if (win > 0 || lose > 0 || draw > 0) {
         new Chart(document.getElementById("myChart"), {
             type: 'pie',
             data: {
-            labels: ["Victoire", "Défaite", "Matchs nuls"],
-            datasets: [{
-                backgroundColor: ['green', 'red', 'gray'],
-                data: [win,lose, draw]
-            }]
+                labels: ["Victoire", "Défaite", "Matchs nuls"],
+                datasets: [{
+                    backgroundColor: ['green', 'red', 'gray'],
+                    data: [win,lose, draw]
+                }]
+            },
+            options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return ((data['datasets'][0]['data'][tooltipItem['index']]/total)*100).toFixed(2) + '%';
+                        }
+                    }
+                }
             }
         });
     } else {
         new Chart(document.getElementById("myChart"), {
             type: 'pie',
             data: {
-            labels: ["Pas de matchs"],
-            datasets: [{
-                backgroundColor: ['orange'],
-                data: [1]
-            }]
+                labels: ["Pas de matchs"],
+                datasets: [{
+                    backgroundColor: ['orange'],
+                    data: [100]
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'label',
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return data['datasets'][0]['data'][tooltipItem['index']] + '%';
+                        }
+                    }
+                }
             }
         });
     }
