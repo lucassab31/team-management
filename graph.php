@@ -11,16 +11,14 @@ if (isset($_GET['win']) && isset($_GET['lose']) && isset($_GET['draw'])) {
     
     $labels = array("Victoire\n(%.1f%%)", "Défaites\n(%.1f%%)", "Matchs nuls\n(%.1f%%)");
 
-    // Create the Pie Graph. 
+    // Création du camambert
     $graph = new PieGraph(300, 175);
     
     $theme_class= new VividTheme;
     $graph->SetTheme($theme_class);
+
     
-    // Set A title for the plot
-    // $graph->title->Set("A Simple 3D Pie Plot");
-    
-    // Create
+    // Création du graph
     $p1 = new PiePlot3D($data);
     $graph->Add($p1);
     $p1->ShowBorder();
@@ -35,6 +33,8 @@ if (isset($_GET['win']) && isset($_GET['lose']) && isset($_GET['draw'])) {
     
     $p1->SetSliceColors(array('forestgreen','red','gray'));
     $graph->Stroke();
+} else {
+    phpinfo();
 }
 
 ?>

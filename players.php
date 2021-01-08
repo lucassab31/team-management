@@ -250,13 +250,13 @@
                         <img src="img/<?= sha1($id)?>.jpg" alt="photo du joueur" width="30%"> 
                     </div>
                     <div class="carte-joueur__information">
-                        N° de Licence : <?= $data['numLicence']?></br>
-                        Date de Naissance : <?= $data['dateN']?></br>
-                        Taille : <?= $data['taille']?>cm
-                        Poids : <?= $data['poids']?>kg</br>
-                        Poste : <?= $data['poste']?></br>
-                        Etat : <?= $data['statut']?></br>
-                        Commentaire : <?= $data['commentaire']?>
+                        <strong>N° de Licence :</strong> <?= $data['numLicence']?></br>
+                        <strong>Date de Naissance : </strong><?= $data['dateN']?></br>
+                        <strong>Taille : </strong><?= $data['taille']?>cm
+                        <strong>Poids : </strong><?= $data['poids']?>kg</br>
+                        <strong>Poste : </strong><?= $data['poste']?></br>
+                        <strong>Etat : </strong><?= $data['statut']?></br>
+                        <strong>Commentaire : </strong><?= $data['commentaire']?>
                     </div>
                 </div>
 

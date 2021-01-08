@@ -1,10 +1,11 @@
 <?php
     require_once('includes/header.php');
+    $msg = "lol salut ";
 ?>
 <main>
     <section class="stats">
         <div class="stats__matchs">
-            <?php
+            <?php // comptage des victoires, défaites et matchs null
                 $select = $bdd->query("SELECT * FROM matchs WHERE scO IS NOT NULL");
                 $win = 0; $lose = 0; $draw = 0;
                 while ($data = $select->fetch()) {
@@ -18,14 +19,8 @@
                 }
             ?>
             <h2 class="section-title text-orange">Résultats</h2>
-            <?php
-                if ($win == 0 && $lose == 0 && $draw == 0) {
-                    echo "Pas de match joué";
-                } else {
-                    echo "<img src='./graph.php?win=$win&lose=$lose&draw=$draw' />";
-                }
-            ?>
-            <br/><br/><br/>
+            <canvas id="myChart"></canvas>
+            <br/><br/>
             <div class="stats__matchs__nombres">
                 <h3 class="text-orange">Matchs :</h3>
                 <div class="stats__matchs__nombres__nombre">
@@ -61,24 +56,24 @@
                         $selectJ->execute(array($joueurs['numLicence']));
                         $joueur = $selectJ->fetch();
                         $selectS = $bdd->prepare('SELECT
-                                                    (
+                                                    ( -- nombre de fois titulaire
                                                         SELECT COUNT(statutM) 
                                                         FROM jouer 
                                                         WHERE numLicence = :numLicence 
                                                         AND statutM = "Titulaire"
                                                     ) as nbTitu,
-                                                    (
+                                                    ( -- nombre de fois remplaçant
                                                         SELECT COUNT(`statutM`) 
                                                         FROM jouer 
                                                         WHERE numLicence = :numLicence 
                                                         AND statutM = "Remplaçant"
                                                     ) as nbRemp,
-                                                    (
+                                                    ( -- moyenne des notes données
                                                         SELECT round(AVG(note), 0) 
                                                         FROM jouer 
                                                         WHERE numLicence = :numLicence
                                                     ) as moyNote,
-                                                    (
+                                                    ( -- nombre de victoire du joueur
                                                         SELECT COUNT(*)
                                                         FROM matchs, jouer
                                                         WHERE jouer.numLicence = :numLicence
@@ -108,3 +103,33 @@
         </div>
     </section>
 </main>
+<script type="text/javascript">
+    var win = <?= json_encode($win) ?>;
+    var lose = <?= json_encode($lose) ?>;
+    var draw = <?= json_encode($draw) ?>;
+
+    if (win > 0 || lose > 0 || draw > 0) {
+        new Chart(document.getElementById("myChart"), {
+            type: 'pie',
+            data: {
+            labels: ["Victoire", "Défaite", "Matchs nuls"],
+            datasets: [{
+                backgroundColor: ['green', 'red', 'gray'],
+                data: [win,lose, draw]
+            }]
+            }
+        });
+    } else {
+        new Chart(document.getElementById("myChart"), {
+            type: 'pie',
+            data: {
+            labels: ["Pas de matchs"],
+            datasets: [{
+                backgroundColor: ['orange'],
+                data: [1]
+            }]
+            }
+        });
+    }
+    
+</script>
