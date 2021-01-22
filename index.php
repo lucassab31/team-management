@@ -1,6 +1,5 @@
 <?php
     require_once('includes/header.php');
-    $msg = "lol salut ";
 ?>
 <main>
     <section class="stats">
